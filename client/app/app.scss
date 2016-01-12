@@ -1,0 +1,41 @@
+/**
+ * App-wide Styles
+ */
+
+
+/* Extra small devices (phones, less than 768px) */
+.container{
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 100%;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .container{
+    width: 750px;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .container{
+    width: 970px;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .container{
+    width: 1170px;
+  }
+}
+
+
+// Component styles are injected through grunt
+// injector
+@import 'main/main.scss';
+@import 'search-bar/searchbar.scss';
+// endinjector
