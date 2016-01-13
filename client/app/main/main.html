@@ -1,11 +1,25 @@
-<search-bar></search-bar>
-<div class="container">
-  <div layout="row" layout-xs="column">
-    <div flex>
+<search-bar tweets="ctrl.tweets" wiki="ctrl.wiki" loading="ctrl.loading"></search-bar>
+<div class="results">
+  <div class="container">
+    <div class="relative col-xs-12">
       Twitter
+      <ul>
+        <li ng-repeat="tweet in ctrl.tweets">
+          <img ng-src="{{tweet.user.profile_image_url}}" alt="Picture"/>
+          <span>{{tweet.user.name}}</span>
+          <p>{{tweet.text}}</p>
+        </li>
+      </ul>
+      <div class="spinner" ng-show="ctrl.loading.twitter">
+        <img src="assets/images/twitter.png" alt="Twitter"/>
+      </div>
     </div>
-    <div flex>
+    <div class="relative col-xs-12">
       Wikipedia
+      <span data-ng-bind-html="ctrl.wiki"></span>
+      <div class="spinner" ng-show="ctrl.loading.wikipedia">
+        <img src="assets/images/wikipedia.png" alt="Wikipedia"/>
+      </div>
     </div>
   </div>
 </div>

@@ -1,9 +1,12 @@
-<div class="container">
-  <md-input-container>
-    <label>&nbsp;</label>
-    <input ng-model="search.who" placeholder="enter search">
-  </md-input-container>
-  <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-    <i class="fa fa-search"></i>
-  </md-button>
+<div class="search col-xs-12">
+  <div class="container">
+    <md-input-container>
+      <label>&nbsp;</label>
+      <input ng-model="ctrl.query" placeholder="enter search">
+    </md-input-container>
+    <md-button aria-label="Search" ng-click="ctrl.search()">
+      <i class="fa fa-search"></i>
+    </md-button>
+  </div>
 </div>
+
