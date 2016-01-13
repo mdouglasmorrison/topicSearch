@@ -1,10 +1,11 @@
 <search-bar tweets="ctrl.tweets" wiki="ctrl.wiki" loading="ctrl.loading"></search-bar>
 <div class="results">
   <div class="container">
-    <div class="relative col-xs-12">
+    <div class="twitter col-xs-12">
       Twitter
+      <div ng-show="ctrl.tweets.length === 0"> No tweets were found. Try another search.</div>
       <ul>
-        <li ng-repeat="tweet in ctrl.tweets">
+        <li ng-repeat="tweet in ctrl.tweets" ng-hide="ctrl.tweets.length === 0">
           <img ng-src="{{tweet.user.profile_image_url}}" alt="Picture"/>
           <span>{{tweet.user.name}}</span>
           <p>{{tweet.text}}</p>
@@ -14,9 +15,12 @@
         <img src="assets/images/twitter.png" alt="Twitter"/>
       </div>
     </div>
-    <div class="relative col-xs-12">
+    <div class="wikipedia col-xs-12">
       Wikipedia
-      <span data-ng-bind-html="ctrl.wiki"></span>
+
+      <div ng-show="ctrl.wiki === null"> No entry was found. Try another search.</div>
+
+      <span data-ng-bind-html="ctrl.wiki" ng-hide="ctrl.wiki === null"></span>
       <div class="spinner" ng-show="ctrl.loading.wikipedia">
         <img src="assets/images/wikipedia.png" alt="Wikipedia"/>
       </div>

@@ -1,5 +1,6 @@
 var Twitter = require('twitter');
 var wikipedia = require('node-wikipedia');
+var Promise = require('bluebird');
 
 var client = new Twitter({
   consumer_key: 'T0tLFHfRyiaLz773luhuTQJ8L',
@@ -12,43 +13,66 @@ module.exports = function(app, io) {
   var ctrl = this;
 
   io.on('connection', function(socket){
-
     socket.on('query', function(query){
-      getWikipedia(query, function(result){
-        io.emit('wiki', result);
-      });
-      getTweets(query, function(result){
-        io.emit('tweet', result);
-      });
+      getWikipedia(query)
+        .then(function (response) {
+          io.emit('wiki', response);
+        })
+        .catch(function(){
+          io.emit('wiki', 'error');
+        });
+      twitterSearch(query)
+        .then(function(response){
+          io.emit('tweetSearch', response);
+          twitterStream(query, io);
+        })
+        .catch(function(){
+          io.emit('tweetSearch', 'error');
+        });
     });
 
     socket.on('disconnect', function(){
-      console.log('user disconnected');
       if(ctrl.stream){
         ctrl.stream.destroy();
       }
     });
   });
 
-  function getWikipedia(query, callback){
-    wikipedia.page.data(query, { content: true }, function(response) {
-      callback(response)
+  function getWikipedia(query){
+    return new Promise(function(resolve, reject) {
+      wikipedia.page.data(query, { content: true }, function(response) {
+        if(response == null || response.text['*'] == null){
+          reject(new Error('There was an error'));
+        }else{
+          resolve(response);
+        }
+      });
     });
   }
 
-  function getTweets(query, callback){
+  function twitterSearch(query, type){
+    return new Promise(function(resolve, reject) {
+      client.get('search/tweets', {q: query, geolocation:'37.781157,-122.398720,100mi'}, function(error, tweets, response){
+        if(error){
+          reject(new Error('There was an error'));
+        }else{
+          resolve(tweets);
+        }
+      });
+    });
+  }
+
+  function twitterStream(query, io){
     if(ctrl.stream){
       ctrl.stream.destroy();
     }
-
     client.stream('statuses/filter', {track: query},  function(stream){
       ctrl.stream = stream;
       stream.on('data', function(tweet) {
-        callback(tweet);
+        io.emit('tweetStream', tweet);
       });
-
       stream.on('error', function(error) {
-        console.log(error);
+        io.emit('tweetStream', 'error');
       });
     });
   }
