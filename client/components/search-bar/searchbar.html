@@ -2,11 +2,17 @@
   <div class="container">
     <md-input-container>
       <label>&nbsp;</label>
-      <input ng-model="ctrl.query" placeholder="enter search">
+      <input ng-model="ctrl.query.value" placeholder="enter search">
     </md-input-container>
-    <md-button aria-label="Search" ng-click="ctrl.search()">
+    <md-button aria-label="Search" ng-click="ctrl.search()" ng-disabled="ctrl.disableButton">
       <i class="fa fa-search"></i>
     </md-button>
+    <md-switch ng-model="ctrl.query.geofence" ng-change="ctrl.getLocation()" ng-show="ctrl.geofenceSupport" class="md-primary location-switch">
+      {{ctrl.query.geofence ? 'Show only Tweets near me.' : 'Show Tweets from everywhere'}}.
+    </md-switch>
   </div>
+</div>
+<div class="location-loader" ng-show="ctrl.disableButton">
+  <h1>Loading your location</h1>
 </div>
 
