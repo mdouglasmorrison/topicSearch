@@ -1,22 +1,24 @@
 <search-bar tweets="ctrl.tweets" wiki="ctrl.wiki" loading="ctrl.loading"></search-bar>
 <div class="results">
   <div class="container">
-    <div class="twitter col-xs-12">
-      Twitter
+    <div class="col-xs-12 section twitter">
+      <img src="assets/images/twitter-header.png" alt="Twitter" class="header-img"/>
       <div ng-show="ctrl.tweets.length === 0"> No tweets were found. Try another search.</div>
       <ul>
         <li ng-repeat="tweet in ctrl.tweets" ng-hide="ctrl.tweets.length === 0">
-          <img ng-src="{{tweet.user.profile_image_url}}" alt="Picture"/>
-          <span>{{tweet.user.name}}</span>
-          <p>{{tweet.text}}</p>
+          <div class="tweet">
+            <img ng-src="{{tweet.user.profile_image_url}}" alt="Picture" class="avatar"/>
+            <span>{{tweet.user.name}}</span>
+            <p>{{tweet.text}}</p>
+          </div>
         </li>
       </ul>
       <div class="spinner" ng-show="ctrl.loading.twitter">
         <img src="assets/images/twitter.png" alt="Twitter"/>
       </div>
     </div>
-    <div class="wikipedia col-xs-12">
-      Wikipedia
+    <div class="section wikipedia col-xs-12">
+      <img src="assets/images/wikipedia-header.png" alt="Twitter" class="header-img"/>
 
       <div ng-show="ctrl.wiki === null"> No entry was found. Try another search.</div>
 

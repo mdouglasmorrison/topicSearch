@@ -3,18 +3,24 @@
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); }}
 
 .results{
+  background-color: #f5f8fa;
   margin-top: 80px;
+  height: 100%;
 }
 
+.section{
+  padding: 20px 0;
+
+  .header-img{
+    width: 150px;
+  }
+}
 
 .relative{
   position: relative;
 }
 
-
-
 .spinner{
-
   img{
     width: 12.5rem;
     -webkit-animation:spin 1s linear infinite;
@@ -22,6 +28,47 @@
     animation:spin 1s linear infinite;
   }
 }
+
+.twitter{
+  ul {
+    margin: 0;
+    float: left;
+    width: 100%;
+    li{
+      background-color: #fff;
+      border: 1px solid #DDDDDD;
+      border-top: none;
+      float: left;
+      list-style: none;
+      margin: 0;
+      padding: 5px 5px 10px;
+      width: 100%;
+    }
+    li:first-child{
+      border-top: 1px solid #DDDDDD;
+    }
+  }
+  .tweet{
+    margin-left: 58px;
+
+    .avatar{
+      border-radius: 5px;
+      float: left;
+      height: 48px;
+      margin-top: 3px;
+      margin-left: -58px;
+      width: 48px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
 
 @media (min-width: 768px) {
 
