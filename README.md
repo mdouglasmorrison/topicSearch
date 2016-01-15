@@ -1,6 +1,7 @@
 # topicSearch
 
 I think the most interesting challenge of this application was figuring out how to handle returning data from two API's based on a single query. On the surface, it seems that you are stuck choosing between two less than ideal options. Those being:
+
 1. Make two separate HTTP requests to the two different API proxies, in order to mantain asynchronicity. However, you're making once unneccesary request.
 2. Make a single HTTP request to the back end, but you're essentially making your back end synchronous, because the request is dependent on the slower of the two APIs to return. This is not good either.
 
