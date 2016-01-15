@@ -1,18 +1,19 @@
-<div class="search col-xs-12">
+<div class="menu-bar">
   <div class="container">
-    <md-input-container>
-      <label>Search for a topic</label>
-      <input ng-model="ctrl.query.value">
-    </md-input-container>
-    <md-button aria-label="Search" ng-click="ctrl.search()" ng-disabled="ctrl.disableButton">
-      <i class="fa fa-search"></i>
-    </md-button>
-    <md-switch ng-model="ctrl.query.geofence" ng-change="ctrl.getLocation()" ng-show="ctrl.geofenceSupport" class="md-primary location-switch">
-      {{ctrl.query.geofence ? 'Show only Tweets near me.' : 'Show Tweets from everywhere'}}.
+    <form ng-submit="ctrl.search()">
+      <md-input-container class="md-primary">
+        <label>Search for a topic</label>
+        <input ng-model="ctrl.query.value">
+      </md-input-container>
+      <md-button aria-label="Search" ng-click="ctrl.search()" ng-disabled="ctrl.disableButton" class="md-raised md-primary">
+        Search
+      </md-button>
+    </form>
+    <md-switch ng-model="ctrl.query.geofence" ng-change="ctrl.getLocation()" ng-show="ctrl.geofenceSupport" class="md-accent">
+      {{ctrl.query.geofence ? 'Showing local Tweets' : 'Showing global Tweets'}}.
     </md-switch>
-  </div>
 </div>
-<div class="location-loader" ng-show="ctrl.disableButton">
-  <h1>Loading your location</h1>
+<div class="loading" ng-show="ctrl.disableButton">
+  <p>Loading your location</p>
+  <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
-

@@ -1,30 +1,38 @@
-<search-bar tweets="ctrl.tweets" wiki="ctrl.wiki" loading="ctrl.loading"></search-bar>
-<div class="results">
-  <div class="container">
-    <div class="col-xs-12 section twitter">
-      <img src="assets/images/twitter-header.png" alt="Twitter" class="header-img"/>
-      <div ng-show="ctrl.tweets.length === 0"> No tweets were found. Try another search.</div>
-      <ul>
-        <li ng-repeat="tweet in ctrl.tweets" ng-hide="ctrl.tweets.length === 0">
-          <div class="tweet">
-            <img ng-src="{{tweet.user.profile_image_url}}" alt="Picture" class="avatar"/>
-            <span>{{tweet.user.name}}</span>
-            <p>{{tweet.text}}</p>
-          </div>
-        </li>
-      </ul>
-      <div class="spinner" ng-show="ctrl.loading.twitter">
-        <img src="assets/images/twitter.png" alt="Twitter"/>
-      </div>
+<search-bar tweets="ctrl.tweets" wiki="ctrl.wiki" loading="ctrl.loading" clean="ctrl.clean"></search-bar>
+<div class="main">
+  <div class="landing" ng-show="ctrl.clean && !ctrl.loading.twitter && !ctrl.loading.wikipedia">
+    <div class="container">
+      Enter a topic above to view results from Twitter and Wikipedia.
     </div>
-    <div class="section wikipedia col-xs-12">
-      <img src="assets/images/wikipedia-header.png" alt="Twitter" class="header-img"/>
-
-      <div ng-show="ctrl.wiki === null"> No entry was found. Try another search.</div>
-
-      <span data-ng-bind-html="ctrl.wiki" ng-hide="ctrl.wiki === null"></span>
-      <div class="spinner" ng-show="ctrl.loading.wikipedia">
-        <img src="assets/images/wikipedia.png" alt="Wikipedia"/>
+  </div>
+  <div class="results">
+    <div class="container">
+      <div class="col-xs-12 section twitter">
+        <img src="assets/images/twitter-header.png" alt="Twitter" class="header-img" ng-show="!ctrl.clean"/>
+        <div class="spinner" ng-show="ctrl.loading.twitter">
+          <img src="assets/images/twitter.png" alt="Twitter"/>
+        </div>
+        <div ng-show="ctrl.tweets.length === 0 && !ctrl.clean && !ctrl.loading.twitter"> No tweets were found. Try another search.</div>
+        <md-content ng-hide="ctrl.clean || ctrl.loading.twitter">
+          <md-list>
+            <md-list-item class="md-3-line" ng-repeat="tweet in ctrl.tweets">
+              <img ng-src="{{tweet.user.profile_image_url}}" class="avatar" alt="{{tweet.user.name}}">
+              <div class="md-list-item-text">
+                <h3>{{tweet.user.name}}</h3>
+                <p>{{tweet.text}}</p>
+              </div>
+              <md-divider md-inset ng-if="!$last"></md-divider>
+            </md-list-item>
+          </md-list>
+        </md-content>
+      </div>
+      <div class="section wikipedia col-xs-12">
+        <img src="assets/images/wikipedia-header.png" alt="Wikipedia" class="header-img" ng-show="!ctrl.clean"/>
+        <div class="spinner" ng-show="ctrl.loading.wikipedia">
+          <img src="assets/images/wikipedia.png" alt="Wikipedia"/>
+        </div>
+        <div ng-show="ctrl.wiki.length === 0 && !ctrl.clean && !ctrl.loading.wikipedia"> No entry was found. Try another search.</div>
+        <span data-ng-bind-html="ctrl.wiki" ng-hide="ctrl.clean || ctrl.loading.twitter || ctrl.wiki === null"></span>
       </div>
     </div>
   </div>

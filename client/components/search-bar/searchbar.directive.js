@@ -11,9 +11,11 @@
       restrict: 'E',
       templateUrl: 'components/search-bar/searchbar.html',
       scope: {
+          clean: '=',
+          loading: '=',
           tweets: '=',
-          wiki: '=',
-          loading: '='
+          wiki: '='
+
       },
       controller: SearchBarController,
       controllerAs: 'ctrl',
@@ -31,6 +33,9 @@
       /* ---INITIALIZATION FUNCTION--- */
 
       function init(){
+
+        ctrl.tweets = [];
+        ctrl.wiki = '';
         //Check for geolocation support to show/hide locator switch
         if (navigator.geolocation) {
           ctrl.geofenceSupport = true;
@@ -43,10 +48,12 @@
 
         //Value store for location in progress
         ctrl.disableButton = false;
+
         //Check to see if the user has a fresh search.
         //If so, get the topic and immediately search it.
         if ($cookies.get('topicSearch')) {
           ctrl.query.value = $cookies.get('topicSearch');
+          ctrl.clean = false;
           ctrl.loading = {
             twitter: true,
             wikipedia: true
@@ -71,6 +78,7 @@
           navigator.geolocation.getCurrentPosition(function(position) {
             ctrl.query.location = position.coords.latitude + ',' + position.coords.longitude + ',100mi';
             ctrl.disableButton = false;
+            ctrl.search();
           });
         }
       };
@@ -79,6 +87,8 @@
       //Function to query API's for a given topic and save the query for 5 minutes
       ctrl.search = function(){
         var expireDate;
+
+        ctrl.clean = false;
 
         //Show loading indicators for each section
         ctrl.loading = {
