@@ -6,7 +6,7 @@
     .directive('searchBar', searchBar);
 
   /** @ngInject */
-  function searchBar($state) {
+  function searchBar() {
     var directive = {
       restrict: 'E',
       templateUrl: 'components/search-bar/searchbar.html',
@@ -15,7 +15,6 @@
           loading: '=',
           tweets: '=',
           wiki: '='
-
       },
       controller: SearchBarController,
       controllerAs: 'ctrl',
@@ -26,7 +25,7 @@
 
     /** @ngInject */
     function SearchBarController($rootScope, $cookies) {
-      var socket = io(),
+      var socket = window.io(),
       ctrl = this;
 
 
@@ -70,7 +69,7 @@
       //Function to get user location if they toggle
       ctrl.getLocation = function () {
         //Check to see if there is already a location set, if not, get it.
-        if(ctrl.query.location == null){
+        if(ctrl.query.location ===  null || ctrl.query.location === undefined){
           //Disable the search button and show loading indicator until the location comes back.
           ctrl.disableButton = true;
 
@@ -114,7 +113,7 @@
       //Socket subscriber for the wikipedia results.
       socket.on('wiki', function(result){
         ctrl.loading.wikipedia = false;
-        if(result === 'error' || result.text == null){
+        if(result === 'error' || result.text === null || result.text === undefined){
           ctrl.wiki = null;
         }else{
           ctrl.wiki = result.text['*'];

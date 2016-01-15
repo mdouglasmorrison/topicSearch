@@ -5,24 +5,24 @@ describe('Controller: MainCtrl', function () {
   // load the controller's module
   beforeEach(module('topicSearchApp'));
 
+
   var MainCtrl,
-      scope,
-      $httpBackend;
+    scope,
+    controller;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
-    $httpBackend = _$httpBackend_;
-    $httpBackend.expectGET('/api/things')
-      .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
-
+  beforeEach(inject(function ($rootScope, $controller) {
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
-      $scope: scope
-    });
+    controller = $controller;
   }));
 
-  it('should attach a list of things to the scope', function () {
-    $httpBackend.flush();
-    expect(scope.awesomeThings.length).toBe(4);
+  it("should not be loading on Init", function () {
+    var ctrl = controller("MainCtrl", { $scope: scope });
+    expect(ctrl.loading.twitter).toBe(false);
+    expect(ctrl.loading.wikipedia).toBe(false);
+  });
+
+  it("should be clean on init", function () {
+    var ctrl = controller("MainCtrl", { $scope: scope });
+    expect(ctrl.clean).toBe(true);
   });
 });

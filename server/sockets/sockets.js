@@ -1,6 +1,6 @@
 var Twitter = require('twitter');
 var wikipedia = require('node-wikipedia');
-var Promise = require('bluebird');
+var promise = require('bluebird');
 
 //Twitter config
 var client = new Twitter({
@@ -49,9 +49,9 @@ module.exports = function(app, io) {
 
   //Uses the Wikipedia API NPM package with Bluebird promises
   function getWikipedia(query){
-    return new Promise(function(resolve, reject) {
+    return new promise(function(resolve, reject) {
       wikipedia.page.data(query, { content: true }, function(response) {
-        if(response == null || response.text['*'] == null){
+        if(response === null || response === undefined || response.text['*'] === null || response.text['*'] === undefined){
           reject(new Error('There was an error'));
         }else{
           resolve(response);
@@ -72,7 +72,7 @@ module.exports = function(app, io) {
     }
 
     //Return promise
-    return new Promise(function(resolve, reject) {
+    return new promise(function(resolve, reject) {
       client.get('search/tweets', config, function(error, tweets, response){
         if(error){
           reject(new Error('There was an error'));

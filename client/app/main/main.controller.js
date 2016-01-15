@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('topicSearchApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function () {
     var ctrl = this;
 
     ctrl.loading = {
@@ -10,5 +10,4 @@ angular.module('topicSearchApp')
     };
 
     ctrl.clean = true;
-
   });
